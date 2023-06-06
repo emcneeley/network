@@ -19,7 +19,7 @@ export default {
             search, 
             async searchPosts(){
                 try {
-                    const searchTerm=search.value
+                    const searchTerm = search.value
                     await postsService.searchPosts(searchTerm)
                 } catch (error) {
                    Pop.error(error) 

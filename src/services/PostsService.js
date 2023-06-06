@@ -19,7 +19,8 @@ class PostsService {
                 creatorId: id
             }
         })
-
+        AppState.olderPageUrl = res.data.older
+        AppState.newerPageUrl = res.data.newer
         AppState.posts = res.data.posts.map(p => new Post(p))
     }
 
@@ -41,11 +42,16 @@ class PostsService {
         AppState.posts = res.data.posts.map(p => new Post(p))
     }
 
-    async createPost() {
-        const res = await api.post('/api/posts')
-        console.log(res.data, '[IM TRYING TO CREATE SHIT]')
+    async createPost(formData) {
+        const res = await api.post('/api/posts', formData)
+        console.log(res.data, '[IM TRYING TO CREATE Stuff]')
     }
 
+    async deletePost(postId) {
+        const res = api.delete(`/api/posts/${postId}`)
+        console.log(res.data, 'deleting shit')
+        AppState.posts = AppState.posts.filter(p => p.id != postId)
+    }
 }
 
 export const postsService = new PostsService()

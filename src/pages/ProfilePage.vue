@@ -1,6 +1,9 @@
 <template>
 <section class="row my-3">
-    
+    <div class="mb-3">
+      <button :disabled="!olderUrl" @click="changePage(olderUrl)" class="btn btn-light">Older</button>
+          <button :disabled="!newerUrl" @click="changePage(newerUrl)" class="btn btn-light">Newer</button>
+     </div>
     <div class="col-9 container">
 
         <ProfileCard :profile="profile"/>
@@ -56,6 +59,9 @@ async function getProfile(){
     }
 }
 
+// TODO pagination on profile page: just reference your buttonns and the changePage method on the home page
+// NOTE now that you are saving the URLs when you get profile posts...this should work here too
+
 async function getPostsByProfile(){
     try {
         await postsService.getPostsByProfile(route.params.id)
@@ -81,6 +87,16 @@ onMounted(()=>{
 profile:computed(()=> AppState.profile),
 posts: computed(()=> AppState.posts),
 banner: computed(()=> AppState.banner),
+olderUrl: computed(() => AppState.olderPageUrl),
+newerUrl: computed(() => AppState.newerPageUrl),
+
+            async changePage(url) {
+                try {
+                    await postsService.changePage(url)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
 
 
 

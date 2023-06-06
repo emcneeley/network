@@ -7,7 +7,7 @@
       <button :disabled="!newerUrl" @click="changePage(newerUrl)" class="btn btn-light">Newer</button>
  </div>
  <CreatePost/>
-   <div class=" mb-2" v-for="p in posts" :key="p.id">
+   <div class="mb-2 container" v-for="p in posts" :key="p.id">
      <PostCard :post="p"/>
    </div>
    </div>
